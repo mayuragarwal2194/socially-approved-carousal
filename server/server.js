@@ -17,6 +17,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Route to verify if api is live
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Socially Approved Carousel API is running",
+  });
+});
 
 app.use("/api/v1/videos", videoRoutes);
 
