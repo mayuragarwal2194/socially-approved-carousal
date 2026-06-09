@@ -8,7 +8,7 @@ export default function VideoControls({
     <>
       <button
         onClick={onToggleMute}
-        className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-xl text-white cursor-pointer"
+        className="absolute right-2 md:right-4 top-4 z-30 flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-black/50 text-base md:text-xl text-white cursor-pointer"
       >
         <i className={isMuted ? "ri-volume-mute-line" : "ri-volume-up-line"} />
       </button>

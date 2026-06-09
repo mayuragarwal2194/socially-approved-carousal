@@ -9,19 +9,23 @@ export default function VideoCard({ video, onClick }) {
 
     if (!videoElement) return;
 
+    // Auto-play preview videos only when mostly visible in viewport.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // Ignore autoplay errors that may occur due to browser policies.
           videoElement.play().catch(() => {});
         }else{
           videoElement.pause();
         }
       },
+      // Start playback when at least 60% of the video is visible.
       {threshold: 0.6}
     );
 
     observer.observe(videoElement);
 
+    // Cleanup observer when component unmounts (to prevent memory leaks)
     return () => {
       observer.unobserve(videoElement);
     }

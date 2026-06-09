@@ -1,41 +1,40 @@
+// Backend API URL configured through Vite environment variables
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const fetchVideos = async () => {
-  const response = await fetch(`${API_BASE_URL}/videos`);
+// Shared request helper to avoid repeating fetch/error-handling logic
+const request = async (url, options = {}) => {
+  try {
+    const response = await fetch(url, options);
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to fetch videos");
+    // Convert API errors into JavaScript errors
+    if (!response.ok) {
+      throw new Error(data.message || "Request failed");
+    }
+
+    return data;
+  } catch (error) {
+    // Handle network failures and unexpected request errors
+    throw new Error(error.message || "Network error");
   }
-
-  return data;
 };
 
-export const likeVideo = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/videos/${id}/like`, {
-    method: "POST",
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to like video");
-  }
-
-  return data;
+// Fetch all videos for the carousel
+export const fetchVideos = () => {
+  return request(`${API_BASE_URL}/videos`);
 };
 
-export const shareVideo = async (id) => {
-  const response = await fetch(`${API_BASE_URL}/videos/${id}/share`, {
+// Increment like count for a video
+export const likeVideo = (id) => {
+  return request(`${API_BASE_URL}/videos/${id}/like`, {
     method: "POST",
   });
+};
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to share video");
-  }
-
-  return data;
+// Increment share count for a video
+export const shareVideo = (id) => {
+  return request(`${API_BASE_URL}/videos/${id}/share`, {
+    method: "POST",
+  });
 };

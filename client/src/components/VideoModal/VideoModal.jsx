@@ -74,8 +74,14 @@ export default function VideoModal({ videos, selectedVideoIndex, onClose }) {
           }}
           initialSlide={selectedVideoIndex}
           centeredSlides={true}
-          slidesPerView={3}
-          spaceBetween={25}
+          slidesPerView={1.6}
+          breakpoints={{
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 18,
+            },
+          }}
+          spaceBetween={0}
           onSwiper={(swiper) => {
             // Save swiper instance for external control
             swiperRef.current = swiper;

@@ -9,6 +9,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
 
+  // Fetch videos once when the home page loads
   useEffect(() => {
     const loadVideos = async () => {
       try {
@@ -32,11 +33,14 @@ export default function Home() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <section className="min-h-screen bg-black text-white flex flex-col items-senter justify-center px-50">
-      <h1 className="text-4xl font-bold mb-6">Socially Approved</h1>
+    <section className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 sm:px-8 lg:px-20">
+      <h1 className="mb-6 text-3xl font-bold sm:text-4xl md:text-5xl">
+        Socially Approved
+      </h1>
 
       <VideoCarousel videos={videos} onVideoClick={setSelectedVideoIndex} />
 
+      {/* Show modal only when a video is selected */}
       {selectedVideoIndex !== null && (
         <VideoModal
           videos={videos}
